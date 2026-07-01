@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { products } from "@/data/products";
+import { formatCurrency } from "@/lib/currency";
 import {
     Card,
     CardHeader,
@@ -18,13 +19,18 @@ const FeaturedProducts = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {featured.map((product) => (
                     <Link key={product.id} href={`/products/${product.slug}`}>
-                        <Card className="hover:shadow-lg transition-shadow">
+                        <Card className="hover:shadow-lg transition-shadow overflow-hidden">
+                            <img
+                                src={product.images[0]}
+                                alt={product.name}
+                                className="w-full h-48 object-cover"
+                            />
                             <CardHeader>
                                 <Badge variant="secondary">{product.category}</Badge>
                                 <CardTitle>{product.name}</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-gray-600">${product.price}</p>
+                                <p className="text-gray-600">{formatCurrency(product.price)}</p>
                             </CardContent>
                         </Card>
                     </Link>

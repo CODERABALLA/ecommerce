@@ -6,6 +6,7 @@ import { products } from "@/data/products";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { formatCurrency } from "@/lib/currency";
 import {
     Select,
     SelectTrigger,
@@ -13,6 +14,7 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
+import Image from "next/image";
 
 const categories = ["All", ...new Set(products.map((p) => p.category))];
 
@@ -61,12 +63,22 @@ const ProductsPage = () => {
                     {filtered.map((product) => (
                         <Link key={product.id} href={`/products/${product.slug}`}>
                             <Card className="hover:shadow-lg transition-shadow">
+                                <div className="relative w-full h-64">
+                                    <Image
+                                        src={product.images[0]}
+                                        alt={product.name}
+                                        fill
+                                        className="object-cover rounded-t-lg"
+                                    />
+                                </div>
+
+
                                 <CardHeader>
                                     <Badge variant="secondary">{product.category}</Badge>
                                     <CardTitle>{product.name}</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-gray-600">${product.price}</p>
+                                    <p className="text-gray-600">{formatCurrency(product.price)}</p>
                                 </CardContent>
                             </Card>
                         </Link>
